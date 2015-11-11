@@ -31,5 +31,9 @@ plot(x = students.normal_ratio$certificate,
 lines(stats::lowess(x = students$certificate[order(students$certificate)],
                     y = students$eit[order(students$eit)]))
 
-# Draw students with high ratio on a plot
+# Get surnames of students wuth hight ratio
+students.high_eit_ratio.surnames <- do.call(rbind, strsplit(as.character(students.high_eit_ratio$name), split = " "))[,1]
+# Draw them on a plot
 points(x = students.high_eit_ratio$certificate, y = students.high_eit_ratio$eit, col = "red", pch = 1)
+# Draw their surnames near a point
+text(x = students.high_eit_ratio$certificate, y = students.high_eit_ratio$eit, labels = students.high_eit_ratio.surnames, cex = 0.5)
