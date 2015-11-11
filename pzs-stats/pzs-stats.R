@@ -37,3 +37,5 @@ students.high_eit_ratio.surnames <- do.call(rbind, strsplit(as.character(student
 points(x = students.high_eit_ratio$certificate, y = students.high_eit_ratio$eit, col = "red", pch = 1)
 # Draw their surnames near a point
 text(x = students.high_eit_ratio$certificate, y = students.high_eit_ratio$eit, labels = students.high_eit_ratio.surnames, cex = 0.5)
+# Draw a plot legend
+legend("topleft", legend = "Red - students with low certificate and relatively high EIT scores", cex = .7, text.col = "#4a4a4a", box.col = "#a6a6a6")
