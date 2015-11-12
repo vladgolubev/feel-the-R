@@ -1,12 +1,16 @@
-# Load the json library
+# Load the necessary libraries
 library(jsonlite)
 library(dplyr)
+library(ggvis)
+
+# Number of scrobbles to load
+PAGES <- 500
 
 # Empty vector to store the retrieved scrobbles dates
 dates.raw <- numeric()
 
 # Loop length is the number of lastfm pages with recent tracks
-for (index in 1:3) {
+for (index in 1:ceiling(PAGES / 200)) {
   print(paste("Processing page #", index))
   data <-
     fromJSON(
@@ -27,13 +31,13 @@ dates.hours <- data.matrix(summary(factor(na.omit(sapply(dates.raw, function(dat
 })))))
 
 # Extract weekdays from parsed dates
-scrobbles_weekdays <- summary(factor( sapply(dates.parsed, function(parsed_date) { weekdays(parsed_date) } ) ))
+scrobbles_weekdays <- summary(factor(sapply(dates.parsed, weekdays)))
 dates.weekdays <- data.frame(days = names(scrobbles_weekdays), playcount = unname(scrobbles_weekdays))
 
 # Sort weekdays by natural order
 dates.weekdays$days <- factor(dates.weekdays$days,
                               levels = c("понеділок", "вівторок", "середа", "четвер", "п'ятниця", "субота", "неділя"))
-dates.weekdays[order(dates.weekdays$days),]
+dates.weekdays <- arrange(dates.weekdays, days)
 
 # Plot the spline of hours distribution of my scrobbles
 plot(
@@ -54,6 +58,4 @@ axis(side = 2)
 lines(smooth.spline(dates.hours))
 
 # Draw days of week distribution graph
-library(ggvis)
 dates.weekdays %>% ggvis(~days, ~playcount, fill := "#eee") %>% layer_bars()
-
