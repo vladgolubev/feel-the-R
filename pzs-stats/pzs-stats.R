@@ -1,23 +1,23 @@
 # Load libraries
-library(class)
+library(dplyr)
 
 # Set working directory to source file location
 this.dir <- dirname(parent.frame(2)$ofile)
 setwd(this.dir)
 
 # Read CSV file
-students <- read.csv(file="pzs-students14.csv", head=TRUE, sep=",")
+students <- tbl_df(read.csv(file="pzs-students14.csv", head=TRUE, sep=","))
 
 # Find students whose certificate scores are below the average regarding their EIT scores
-eit_certificate_ratio <- (students$eit / students$certificate)
-students.high_eit_ratio <- (students[eit_certificate_ratio > mean(eit_certificate_ratio), ])
-# Sort them in descending order by ratio
-students.high_eit_ratio <- students.high_eit_ratio[with(students.high_eit_ratio, order(-(students.high_eit_ratio$eit / students.high_eit_ratio$certificate))), ]
-# Filter students whose score is above average
-students.high_eit_ratio <- students.high_eit_ratio[students.high_eit_ratio$score > mean(students$score), ]
+students <- mutate(students, eit_certificate_ratio = eit / certificate)
+students.high_eit_ratio <- filter(
+  arrange(
+    filter(students, eit_certificate_ratio > mean(eit_certificate_ratio)), # Whose certificate ratio is above average
+    desc(eit_certificate_ratio)), # In descending order
+  score > mean(score) # Whoes score is above average
+  )
 
 # Filter students with normal eit/certificate ration
-library(dplyr)
 students.normal_ratio <- anti_join(students, students.high_eit_ratio)
 
 # Draw a plot
