@@ -1,11 +1,12 @@
 # Load the json library
 library(jsonlite)
+library(dplyr)
 
 # Empty vector to store the retrieved scrobbles dates
 dates.raw <- numeric()
 
 # Loop length is the number of lastfm pages with recent tracks
-for (index in 1:320) {
+for (index in 1:3) {
   print(paste("Processing page #", index))
   data <-
     fromJSON(
@@ -20,20 +21,10 @@ for (index in 1:320) {
   dates.raw <- c(dates.raw, as.numeric(unlist(data$recenttracks$track$date$uts)))
 }
 
-dates.parsed <- c(Sys.time())
-
-for (raw_date in dates.raw) {
-  # Parse dates to R Date objects
-  dates.parsed <- c(dates.parsed, as.POSIXct(raw_date, origin = "1970-01-01"))
-}
-
-# Remove NA values
-dates.parsed <- na.omit(dates.parsed)
-
 # Extract hours from parsed dates
-dates.hours <- data.matrix(summary(factor(sapply(dates.parsed, function(parsed_date) {
-  format(parsed_date, "%H")
-}))))
+dates.hours <- data.matrix(summary(factor(na.omit(sapply(dates.raw, function(date) {
+  format(as.POSIXct(date, origin = "1970-01-01"), "%H")
+})))))
 
 # Extract weekdays from parsed dates
 scrobbles_weekdays <- summary(factor( sapply(dates.parsed, function(parsed_date) { weekdays(parsed_date) } ) ))
