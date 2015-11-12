@@ -4,13 +4,13 @@ library(dplyr)
 library(ggvis)
 
 # Number of scrobbles to load
-PAGES <- 500
+SCROBBLES <- 500
 
 # Empty vector to store the retrieved scrobbles dates
 dates.raw <- numeric()
 
 # Loop length is the number of lastfm pages with recent tracks
-for (index in 1:ceiling(PAGES / 200)) {
+for (index in 1:ceiling(SCROBBLES / 200)) {
   print(paste("Processing page #", index))
   data <-
     fromJSON(
