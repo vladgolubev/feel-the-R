@@ -39,4 +39,4 @@ LASTFM.DATA <- data.frame(
   stringsAsFactors = FALSE
 ) %>% tbl_df() %>% filter(!is.na(date))
 
-write.csv(LASTFM.DATA, row.names = FALSE, "lastfm-dump-20151113.csv")
+write.csv(LASTFM.DATA, row.names = FALSE, paste("lastfm-", LASTFM.USERNAME, "-dump-", Sys.Date(), ".csv", sep = ""))
