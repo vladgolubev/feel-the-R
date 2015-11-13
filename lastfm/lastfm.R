@@ -17,7 +17,7 @@ for (index in 1:ceiling(SCROBBLES / 200)) {
       paste(
         "http://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&limit=200&user=samosfator&page=",
         index,
-        "&extended=0&api_key=5ddb360d1e5fa830834e4b9ec479b7c6&format=json",
+        "&extended=1&api_key=5ddb360d1e5fa830834e4b9ec479b7c6&format=json",
         sep = ""
       )
     )
