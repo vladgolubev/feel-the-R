@@ -4,3 +4,4 @@ This repo is aimed to host the results of my practice with [R](https://r-project
 
 1. [last.fm data visualization](/lastfm)
 2. [pzs enrollee data visualisation](/pzs-stats)
+3. [vk.com group members most common publics](/vk-stats)
