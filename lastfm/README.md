@@ -15,3 +15,7 @@ The only thing that can attract your attention is that more plays are on odd wee
 
 This plot illustrates the contrary situation of two users' playcount throughout the week.
 ![Plays count per day of week](/lastfm/plots/days-of-week-comparison.png)
+
+### Plays distribution per day/month
+![Plays per month](/lastfm/plots/plays-per-month.png)
+![Plays per day](/lastfm/plots/plays-per-day.png)
