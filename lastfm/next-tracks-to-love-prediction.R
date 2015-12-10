@@ -62,4 +62,5 @@ summary(factor(prediction.result))
 alreadyloved <- sort(unique(paste(dump[dump$loved == 1,]$artist, dump[dump$loved == 1,]$title, sep = " - ")))
 recommendations <- sort(unique(test.tracknames[as.logical(prediction.result)]))
 recommendations <- setdiff(recommendations, alreadyloved)
-recommendations
+
+write(recommendations, file = "lastfm/next-tracks-to-love-prediction.txt")
